@@ -3,8 +3,8 @@ __MACOSX
 .vscode
 
 .docker/.env
-!.docker/data/mariadb
-.docker/data/mariadb/**
+.docker/data/mariadb/*
+!.docker/data/mariadb/.gitkeep
 
-!drupal
 drupal/**
+!drupal/.gitkeep
