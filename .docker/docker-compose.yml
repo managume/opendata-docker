@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+    drupal:
+        build:
+            context: ./build/drupal
+            args: 
+                CREATE_DRUPAL_PROJECT: ${CREATE_DRUPAL_PROJECT}
+        container_name: ${COMPOSE_PROJECT_NAME}_drupal
+        restart: always
+        volumes:
+            - ../drupal:/var/www/html:cached
+        ports:
+            - 80:80
+        
+    mariadb:
+        image: mariadb:${MARIADB_VERSION}
+        container_name: ${COMPOSE_PROJECT_NAME}_mariadb
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MARIADB_NAME}
+            MYSQL_USER: ${MARIADB_USER}
+            MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+        ports:
+            - 3306:3306
+        volumes:
+            - ./data/mariadb:/var/lib/mysql
+    
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        container_name: ${COMPOSE_PROJECT_NAME}_phpmyadmin
+        restart: always
+        ports:
+            - 8000:80
+        environment:
+            PMA_HOST: mariadb
+            PMA_USER: ${PMA_USER}
+            PMA_PASSWORD: ${PMA_PASSWORD}
+            UPLOAD_LIMIT: ${PMA_LIMIT}
