@@ -1,0 +1,10 @@
+
+__MACOSX
+.vscode
+
+.docker/.env
+!.docker/data/mariadb
+.docker/data/mariadb/**
+
+!drupal
+drupal/**
